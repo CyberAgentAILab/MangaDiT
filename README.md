@@ -11,7 +11,7 @@ We propose **MangaDiT**, a powerful model for reference-guided line art coloriza
 ![framwork](docs/framework.png)
 
 ## Update
-- 2025-10-7: Inference code and paper are released.
+- 2025-10-15: Inference code and paper are released.
 - ⭐️ We will open the training code and benchmark datasets publicly upon acceptance of the paper.
 
 ## Setup
