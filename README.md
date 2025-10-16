@@ -1,4 +1,4 @@
-# Reference-Guided Line Art Colorization 
+# MangaDiT: Reference-Guided Line Art Colorization 
 
 Official implementation of [MangaDiT: Reference-Guided Line Art Colorization with Hierarchical Attention in Diffusion Transformers](http://arxiv.org/abs/2508.09709).
 
