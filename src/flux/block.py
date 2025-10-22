@@ -322,7 +322,8 @@ def attn_forward(
         # 3.4 Mix two attention maps
         
         # Use cosine schedule, gradually introduce pooled information in early-mid stage, weaken in late stage
-        base_weight = model_config.get("hier_weight", False)
+        # base_weight = model_config.get("hier_weight", False)
+        base_weight = 0.1
         
         # Convert timestep back to 0-1 range
         if isinstance(timestep, torch.Tensor):
