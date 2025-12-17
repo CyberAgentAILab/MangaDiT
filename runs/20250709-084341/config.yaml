@@ -1,0 +1,42 @@
+dtype: bfloat16
+flux_path: black-forest-labs/FLUX.1-dev
+model:
+  add_cond_attn: false
+  latent_lora: false
+  union_cond_attn: true
+train:
+  accumulate_grad_batches: 8
+  batch_size: 1
+  condition_type_1: lineart
+  condition_type_2: reference
+  dataloader_workers: 5
+  dataset:
+    cache_name: sakuga_data
+    color_ref_path: ../../../data/SakugaDataset/download/kf-train-small
+    condition_size: 512
+    drop_image_prob: 0.1
+    drop_text_prob: 0.1
+    lineart_path: ../../../data/SakugaDataset/download/kf-train-small-lineart2
+    mapping_csv: ../../../data/SakugaDataset/pair_frames_train_small_u2net_0.05.csv
+    target_size: 512
+    type: img
+  gradient_checkpointing: true
+  hier_weight: 0.1
+  lora_config:
+    init_lora_weights: gaussian
+    lora_alpha: 4
+    r: 4
+    target_modules: (.*x_embedder|.*(?<!single_)transformer_blocks\.[0-9]+\.norm1\.linear|.*(?<!single_)transformer_blocks\.[0-9]+\.attn\.to_k|.*(?<!single_)transformer_blocks\.[0-9]+\.attn\.to_q|.*(?<!single_)transformer_blocks\.[0-9]+\.attn\.to_v|.*(?<!single_)transformer_blocks\.[0-9]+\.attn\.to_out\.0|.*(?<!single_)transformer_blocks\.[0-9]+\.ff\.net\.2|.*single_transformer_blocks\.[0-9]+\.norm\.linear|.*single_transformer_blocks\.[0-9]+\.proj_mlp|.*single_transformer_blocks\.[0-9]+\.proj_out|.*single_transformer_blocks\.[0-9]+\.attn.to_k|.*single_transformer_blocks\.[0-9]+\.attn.to_q|.*single_transformer_blocks\.[0-9]+\.attn.to_v|.*single_transformer_blocks\.[0-9]+\.attn.to_out)
+  max_steps: -1
+  optimizer:
+    params:
+      lr: 1
+      safeguard_warmup: true
+      use_bias_correction: true
+      weight_decay: 0.01
+    type: Prodigy
+  sample_interval: 500
+  save_interval: 1000
+  save_path: runs
+  wandb:
+    project: MangaDiT

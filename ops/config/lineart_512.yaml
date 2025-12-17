@@ -1,0 +1,50 @@
+flux_path: "black-forest-labs/FLUX.1-dev"
+dtype: "bfloat16"
+
+model:
+  union_cond_attn: true
+  add_cond_attn: false
+  latent_lora: false
+
+train:
+  batch_size: 1
+  accumulate_grad_batches: 8
+  dataloader_workers: 5
+  save_interval: 1000
+  sample_interval: 500
+  max_steps: -1
+  gradient_checkpointing: true
+  save_path: "runs"
+  hier_weight: 0.1
+
+  # Specify the type of condition to use. 
+  # Options: ["lineart_ref"]
+  condition_type_1: "lineart"
+  condition_type_2: "reference"
+  dataset:
+    type: "img"
+    lineart_path: "../../../data/SakugaDataset/download/kf-train-small-lineart2"  # Path to lineart images
+    color_ref_path: "../../../data/SakugaDataset/download/kf-train-small"  # Path to color and reference images
+    mapping_csv: "../../../data/SakugaDataset/pair_frames_train_small_u2net_0.05.csv"  # CSV file containing image mappings
+    cache_name: "sakuga_data"
+    condition_size: 512
+    target_size: 512
+    drop_text_prob: 0.1 # ori:0.1, but here have no text and set drop_text_prob to 1
+    drop_image_prob: 0.1
+
+  wandb:
+    project: "OminiControl"
+
+  lora_config:
+    r: 4
+    lora_alpha: 4
+    init_lora_weights: "gaussian"
+    target_modules: "(.*x_embedder|.*(?<!single_)transformer_blocks\\.[0-9]+\\.norm1\\.linear|.*(?<!single_)transformer_blocks\\.[0-9]+\\.attn\\.to_k|.*(?<!single_)transformer_blocks\\.[0-9]+\\.attn\\.to_q|.*(?<!single_)transformer_blocks\\.[0-9]+\\.attn\\.to_v|.*(?<!single_)transformer_blocks\\.[0-9]+\\.attn\\.to_out\\.0|.*(?<!single_)transformer_blocks\\.[0-9]+\\.ff\\.net\\.2|.*single_transformer_blocks\\.[0-9]+\\.norm\\.linear|.*single_transformer_blocks\\.[0-9]+\\.proj_mlp|.*single_transformer_blocks\\.[0-9]+\\.proj_out|.*single_transformer_blocks\\.[0-9]+\\.attn.to_k|.*single_transformer_blocks\\.[0-9]+\\.attn.to_q|.*single_transformer_blocks\\.[0-9]+\\.attn.to_v|.*single_transformer_blocks\\.[0-9]+\\.attn.to_out)"
+
+  optimizer:
+    type: "Prodigy"
+    params:
+      lr: 1
+      use_bias_correction: true
+      safeguard_warmup: true
+      weight_decay: 0.01
