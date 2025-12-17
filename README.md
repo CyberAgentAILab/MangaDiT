@@ -30,10 +30,12 @@ huggingface-cli login
 (using your own huggingface-cli token)
 ```
 
-### Inference: quick demo with gradio
+### Inference: 
+Quick demo with gradio
 ```
 python src/gradio/gradio_demo.py --share
 ```
+Alternatively, you can use the Jupyter notebook demo: [colorize_demo.ipynb](colorize_demo.ipynb)
 
 ## Acknowledgements
 This project is developped on the codebase of [FLUX](https://github.com/black-forest-labs/flux) and [OminiControl](https://github.com/Yuanshi9815/OminiControl). We appreciate their great work!
