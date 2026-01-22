@@ -33,7 +33,7 @@ train:
     drop_image_prob: 0.1
 
   wandb:
-    project: "MangaD"
+    project: "MangaDiT"
 
   lora_config:
     r: 4
